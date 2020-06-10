@@ -36,7 +36,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://still-reaches-54835.herokuapp.com/' + TOKEN)
+    bot.set_webhook(url='https://still-reaches-54835.herokuapp.com/' + TOKEN) #https://git.heroku.com/still-reaches-54835.git
     return "!", 200
 
 
