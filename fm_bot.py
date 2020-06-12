@@ -26,6 +26,3 @@ def send_text(message, moex_list = 'moex_list', blue = 'blue_chips_moex'):
         bot.send_message(message.chat.id, 'Я начал просчитывать оптимальный портфель, это займет некоторое время.')
         opt_distrib = fine_folio_1.fine_folio_core(moex_list)
         bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): {}'.format(opt_distrib))
-
-
-#bot.polling()
