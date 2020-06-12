@@ -121,14 +121,14 @@ def fine_folio_core(stocks_to_work):
 
         asset_r_c = sm.tsa.filters.bkfilter(asset_r, 2, 8, 3)  # why? need more details on that
 
-        print('Below is the timeseries after applying Bakster-King filter')
-        print(asset_r_c)
+        #print('Below is the timeseries after applying Bakster-King filter')
+        #print(asset_r_c)
 
         # plt.plot(aflt_r_c)
         # plt.show()
 
         sTest.ADF_Stationarity_Test(asset_r, printResults=True)
-        print("Is the time series stationary? {0}".format(sTest.isStationary))
+        #print("Is the time series stationary? {0}".format(sTest.isStationary))
 
         # At this moment we know our time series is stationary, so we could use
         # ARIMA-GARCH model and than predict next period return.
@@ -142,7 +142,7 @@ def fine_folio_core(stocks_to_work):
             p_list = list(*np.where(pacf_asset[0][a] > pacf_asset[1][a][0] or pacf_asset[0][a] > pacf_asset[1][a][1]))
 
         p_pacf = max(p_list) + 1  # because there couldn't be a 0 lag I've added 1
-        print(p_pacf)
+        #print(p_pacf)
         # optimal p_pacf index is the one after which pacf starts to be around 0
 
         acf_asset = acf(asset_r_c, unbiased=False, nlags=40, qstat=False, fft=None, alpha=.05, missing='none')
@@ -150,7 +150,7 @@ def fine_folio_core(stocks_to_work):
             q_list = list(*np.where(acf_asset[0][s] > acf_asset[1][s][0] or acf_asset[0][s] > acf_asset[1][s][1]))
 
         q_acf = max(q_list) + 1  # because there couldn't be a 0 lag I've added 1
-        print(q_acf)
+        #print(q_acf)
 
         # tsaplots.plot_acf(acf_aflt)
         # plt.show()
@@ -162,24 +162,24 @@ def fine_folio_core(stocks_to_work):
         et_pred = am.forecast(horizon=1).mean['h.1'].iloc[-1]
 
         next_return = mu_pred + et_pred
-        print(next_return)
+        #print(next_return)
 
         next_return = pd.Series(next_return, index=asset_r_c.tail(1).index + 1)
         asset_r_c_forecast = asset_r_c.append(next_return, ignore_index=True)
-        print(asset_r_c_forecast)
+        #print(asset_r_c_forecast)
         length = len(asset_r_c_forecast)
         asset_length_list.append(length)
         # df=asset_r_c_forecast.to_frame().combine_first(df)
         df.reindex(asset_r_c.index)
         df = df.append(asset_r_c_forecast, ignore_index=True)
 
-    print('finished loop')
+    print('Finished processing initial data')
 
     max_length = max(asset_length_list)
 
     asset_length_diff_list = [max_length - x for x in asset_length_list]
 
-    print('this are the length of series {}'.format(asset_length_list), 'the max length {}'.format(max_length))
+    #print('this are the length of series {}'.format(asset_length_list), 'the max length {}'.format(max_length))
 
     new_df = pd.DataFrame(index=None, columns=None)
 
@@ -187,7 +187,7 @@ def fine_folio_core(stocks_to_work):
         new_series = df.iloc[add, :].shift(periods=asset_length_diff_list[add])
         new_df = new_df.append(new_series, ignore_index=True)
 
-    print(new_df)
+    #print(new_df)
     new_df = new_df.transpose()
     max_diff = max(asset_length_diff_list)
     new_df = new_df.iloc[max_diff:]
@@ -227,12 +227,12 @@ def fine_folio_core(stocks_to_work):
     init_guess_value = 1/len(asset_list)
     for i in range(len(asset_list)):
         init_guess.append([init_guess_value])
-    print(init_guess)
+    #print(init_guess)
     opt_results = minimize(neg_sharpe, init_guess, method='SLSQP', bounds=bounds, constraints=cons)
 
-    optimal_weights = opt_results.x
+    optimal_weights = opt_results.x*100
     optimal_weights = pd.Series(optimal_weights, index=asset_list)
-    optimal_weights = optimal_weights.round(decimals=2)
+    optimal_weights = optimal_weights.round()
     print(get_ret_vol_sr(opt_results.x), optimal_weights)
 
     # plot the data
