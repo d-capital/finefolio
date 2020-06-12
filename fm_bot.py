@@ -1,9 +1,9 @@
+from config import *
 import telebot
+from telebot import types
 import fine_folio_1
 import os
 import flask
-from flask import Flask, request
-TOKEN = '826034158:AAHWvRWLuZ2K0FPimIllOIwHIJl8x7h1QUw'
 
 bot = telebot.TeleBot(TOKEN)
 
