@@ -1,1 +1,1 @@
-web: gunicorn fm_bot:
+web: gunicorn fm_bot
