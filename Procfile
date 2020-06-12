@@ -1,1 +1,1 @@
-web: gunicorn run_server:server
+web: gunicorn fm_bot:bot
