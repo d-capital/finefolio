@@ -1,1 +1,1 @@
-web: gunicorn fm_bot.py
+web: gunicorn finefoliofm_bot.py
