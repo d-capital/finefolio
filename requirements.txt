@@ -43,7 +43,6 @@ py==1.8.1
 pydantic==1.5.1
 Pygments==2.6.1
 pyparsing==2.4.6
-pypiwin32==223
 PySocks==1.7.1
 pyTelegramBotAPI==3.7.1
 pytest==5.4.2
