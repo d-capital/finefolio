@@ -60,3 +60,4 @@ Werkzeug==1.0.1
 zope.interface==4.7.1
 telebot==0.0.3
 pytelegrambotapi==3.7.1
+gunicorn
