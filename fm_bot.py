@@ -28,7 +28,6 @@ def send_text(message, moex_list = 'moex_list', blue = 'blue_chips_moex'):
         bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): {}'.format(opt_distrib))
 
 
-bot.polling()
 
 if "HEROKU" in list(os.environ.keys()):
     logger = telebot.logger
