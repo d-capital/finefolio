@@ -1,3 +1,4 @@
+from config import  *
 import telebot
 import fine_folio_1
 import os
