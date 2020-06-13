@@ -43,8 +43,8 @@ def send_text(message, moex_list='moex_list', blue='blue_chips_moex'):
             bot.send_message(message.chat.id, 'Я начал просчитывать оптимальный портфель, это займет некоторое время.')
             opt_distrib = fine_folio_1.fine_folio_core(moex_list, user_capital)
             bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): {}'.format(opt_distrib))
-        else: bot.send_message('Боюсь, что-то пошло не так. Я сообщу о проблеме, но пока портфель посчитать не получится')
-    else: bot.send_message('Что-то опять не так. Мы займемся эти , но пока ничего не получится.')
+        else: bot.send_message(message.chat.id, 'Боюсь, что-то пошло не так. Я сообщу о проблеме, но пока портфель посчитать не получится')
+    else: bot.send_message(message.cha.id, 'Что-то опять не так. Мы займемся эти , но пока ничего не получится.')
 
 #bot.polling()
 
