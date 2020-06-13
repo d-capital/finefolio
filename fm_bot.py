@@ -24,7 +24,7 @@ def start_message(message):
 @bot.message_handler(content_types=['text'])
 
 def send_text(message, moex_list='moex_list', blue='blue_chips_moex'):
-    res = "рублей" in message.text.lower()
+    res = "рублей" in message.text
     if str(res) == True:
         user_capital = message.text.lower().replace(" ", "")
         user_capital = user_capital.replace("рублей", "")
