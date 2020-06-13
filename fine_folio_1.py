@@ -277,6 +277,7 @@ def fine_folio_core(stocks_to_work, user_capital):
         backtest_df['Total'][s] = backtest_df.iloc[s].sum() + backtest_df['Total'][s-1]
     #backtest_df.to_csv(r'C:\Users\DCAPITAL\Documents\FM\backtest_2.csv', index=True, header=True)
 
+    print(capital)
     print(backtest_df)
     picture = backtest_df['Total'].plot(figsize=(10,8))
     #plt.show()
