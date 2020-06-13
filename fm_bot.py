@@ -26,7 +26,7 @@ def start_message(message):
 def send_text(message, moex_list='moex_list', blue='blue_chips_moex'):
     res = "рублей" in message.text
     if str(res) == True:
-        user_capital = message.text.lower().replace(" ", "")
+        user_capital = message.text.replace(" ", "")
         user_capital = user_capital.replace("рублей", "")
         user_capital = int(user_capital)
         bot.send_message(message.chat.id, 'Отлично, с вашим капиталом мы определились, '
