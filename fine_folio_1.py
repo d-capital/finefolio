@@ -1,4 +1,4 @@
-def fine_folio_core(stocks_to_work):
+def fine_folio_core(stocks_to_work, user_capital):
 
     import pandas as pd
     import numpy as np
@@ -246,7 +246,7 @@ def fine_folio_core(stocks_to_work):
     start_b = dt.datetime(2019, 1, 1)  # '2018-01-02'
     end_b = dt.datetime(2019, 12, 31)  # '2019-12-31'
 
-    capital = 100000
+    capital = user_capital
     backtest_df = pd.DataFrame(index=None, columns=None)
     #backtest_df = pd.DataFrame(pd.np.empty((0, len(asset_list))))
 
