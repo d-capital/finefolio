@@ -6,7 +6,7 @@ import flask
 
 user_capital_1 = 0
 
-bot = telebot.TeleBot(TOKEN_TEST)
+bot = telebot.TeleBot(TOKEN)
 
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
 keyboard1.row('50 000 рублей', '100 000 рублей', '150 000 рублей', '200 000 рублей', '300 000 рублей', '400 000 рублей',
@@ -75,4 +75,4 @@ def get_capital(user_capital):
     return user_capital
 
 
-bot.polling()
+#bot.polling()
