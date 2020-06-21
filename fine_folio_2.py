@@ -19,10 +19,13 @@ from statsmodels.graphics import tsaplots
 from statsmodels.graphics.tsaplots import plot_acf
 import csv
 
-lots = pd.DataFrame(data=['1', '10', '10000', '10', '1', '10', '10000', '1', '1000', '100', '10', '10', '1', '10', '1000', '10000', '1000', '1', '100', '10',
-                          '1', '1', '10', '1'],
-                    index=['NVTK', 'SBER', 'FEES', 'AFLT', 'PHOR', 'GAZP', 'VTBR', 'LKOH', 'ENRU', 'SNGS', 'MTSS', 'ROSN', 'PLZL', 'MOEX', 'IRAO', 'FEES',
-                           'HYDR', 'TATN', 'AFKS', 'NLMK', 'GMKN', 'MGNT', 'ALRS', 'CHMF'], columns=['Lot'])
+lots = pd.DataFrame(data=['1', '10', '10000', '10', '1', '10', '10000', '1', '1000', '100', '10',
+                          '10', '1', '10', '1000', '10000', '1000', '1', '100', '10',
+                          '1', '1', '10', '1', '1000', '10', '1', '100', '10', '1', '1', '10', '10'],
+                    index=['NVTK', 'SBER', 'FEES', 'AFLT', 'PHOR', 'GAZP', 'VTBR',
+                           'LKOH', 'ENRU', 'SNGS', 'MTSS', 'ROSN', 'PLZL', 'MOEX', 'IRAO', 'FEES',
+                           'HYDR', 'TATN', 'AFKS', 'NLMK', 'GMKN', 'MGNT', 'ALRS', 'CHMF', 'UPRO',
+                           'RUAL', 'BANE', 'MAGN', 'SIBN', 'POLY', 'MTLR', 'RTKM', 'TRMK'], columns=['Lot'])
 
 
 def fine_folio_core(stocks_to_work, user_capital, start, end):
