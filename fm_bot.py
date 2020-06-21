@@ -3,6 +3,7 @@ import telebot
 import fine_folio_2
 import re
 import datetime as dt
+from tabulate import tabulate
 import flask
 
 user_capital_1 = 0
@@ -62,18 +63,17 @@ def send_text_1(message, user_capital, moex_list='moex_list', blue='blue_chips_m
                          'Я начал просчитывать оптимальный портфель, это займет 5-10 минут. '
                          'Можете пока выпить чай или кофе. В экселе мой создатель делал это часами. :-)')
         opt_distrib = fine_folio_2.fine_folio_core(blue, user_capital, start=dt.datetime(2018, 6, 19), end=dt.datetime(2019, 6, 19))
-        bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): {}'.format(opt_distrib[1]))
+        bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): \n{}'.format(opt_distrib[1]))
         new_capital = fine_folio_2.backtest(blue, opt_distrib[0], user_capital, start_b=dt.datetime(2019, 6, 19), end_b = dt.datetime(2020, 6, 19))
         bot.send_message(message.chat.id, 'Если бы вы вложили тот объем денег год назад, '
-                                          'сейчас у вас бы было {} рублей'.format(new_capital))
+                                          'сейчас у вас бы было {} р.'.format(new_capital))
     elif message.text.lower() == 'первая тридцатка компаний':
-        bot.send_message(message.chat.id, 'Я начал просчитывать оптимальный портфель, это займет некоторое время. '
-                                          'Минут 5-10. Сможете успеть посмотреть короткое видео на YouTube :-)')
-        opt_distrib = fine_folio_2.fine_folio_core(moex_list, user_capital, start=dt.datetime(2018, 6, 19), end=dt.datetime(2019, 6, 19)).optimal_weights_2
-        bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): {}'.format(opt_distrib[1]))
+        bot.send_message(message.chat.id, 'Я начал просчитывать оптимальный портфель, это займет некоторое время. Минут 5-10. Сможете успеть посмотреть короткое видео на YouTube')
+        opt_distrib = fine_folio_2.fine_folio_core(moex_list, user_capital, start=dt.datetime(2018, 6, 19), end=dt.datetime(2019, 6, 19))
+        bot.send_message(message.chat.id, 'Ваш оптимальный портфель на 2020 год (%): \n{}'.format(opt_distrib[1]))
         new_capital = fine_folio_2.backtest(moex_list, opt_distrib[0], user_capital, start_b=dt.datetime(2019, 6, 19), end_b = dt.datetime(2020, 6, 19))
         bot.send_message(message.chat.id, 'Если бы вы вложили тот объем денег год назад, '
-                                          'сейчас у вас бы было {} рублей'.format(new_capital))
+                                          'сейчас у вас бы было {} р.'.format(new_capital))
 
 
 def get_capital(user_capital):
