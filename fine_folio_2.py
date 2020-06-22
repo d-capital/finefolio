@@ -19,13 +19,13 @@ from statsmodels.graphics import tsaplots
 from statsmodels.graphics.tsaplots import plot_acf
 import csv
 
-lots = pd.DataFrame(data=['1', '10', '10000', '10', '1', '10', '10000', '1', '1000', '100', '10',
+lots = pd.DataFrame(data=['1', '10', '10', '1', '10', '10000', '1', '1000', '100', '10',
                           '10', '1', '10', '1000', '10000', '1000', '1', '100', '10',
                           '1', '1', '10', '1', '1000', '10', '1', '100', '10', '1', '1', '10', '10'],
-                    index=['NVTK', 'SBER', 'FEES', 'AFLT', 'PHOR', 'GAZP', 'VTBR',
-                           'LKOH', 'ENRU', 'SNGS', 'MTSS', 'ROSN', 'PLZL', 'MOEX', 'IRAO', 'FEES',
-                           'HYDR', 'TATN', 'AFKS', 'NLMK', 'GMKN', 'MGNT', 'ALRS', 'CHMF', 'UPRO',
-                           'RUAL', 'BANE', 'MAGN', 'SIBN', 'POLY', 'MTLR', 'RTKM', 'TRMK'], columns=['Lot'])
+                    index=['NVTK', 'SBER', 'AFLT', 'PHOR', 'GAZP', 'VTBR', 'LKOH', 'ENRU', 'SNGS',
+                           'MTSS', 'ROSN', 'PLZL', 'MOEX', 'IRAO','FEES', 'HYDR', 'TATN', 'AFKS',
+                           'NLMK', 'GMKN', 'MGNT', 'ALRS', 'CHMF', 'UPRO', 'RUAL', 'BANE', 'MAGN',
+                           'SIBN', 'POLY', 'MTLR', 'RTKM', 'TRMK'], columns=['Lot'])
 
 
 def fine_folio_core(stocks_to_work, user_capital, start, end):
@@ -245,11 +245,11 @@ def fine_folio_core(stocks_to_work, user_capital, start, end):
     optimal_weights = opt_results.x
     optimal_weights = pd.Series(optimal_weights, name='Percentage (%)', index=asset_list)
     used_lots = pd.Series(data=None, name='Lot', index=asset_list)
-    used_quantities = pd.Series(data=None, name='How much lots to buy', index=asset_list)
+    used_quantities = pd.Series(data=None, name='Lots to buy', index=asset_list)
     optimal_weights = round(optimal_weights, 2)
     print(get_ret_vol_sr(opt_results.x), optimal_weights)
     for stock in asset_list:
-        todays_bar = web.DataReader(stock, 'moex', start = dt.datetime(2019, 6, 18), end = dt.datetime(2019, 6, 19))
+        todays_bar = web.DataReader(stock, 'moex', start = dt.datetime(2019, 6, 18), end = dt.datetime(2019, 6, 30))
         todays_bar = todays_bar[todays_bar.BOARDID.isin(['RPMO', 'RPMA'])]
         last_close = todays_bar['CLOSE']
         #print('I used the following price to calculate lot: {}'.format(last_close))
@@ -259,15 +259,15 @@ def fine_folio_core(stocks_to_work, user_capital, start, end):
         used_lots[stock] = lot_to_use
         if x < 0.9:
             x = 0
-            optimal_weights[stock] = (x*lot_to_use)/user_capital
+            optimal_weights[stock] = (x*lot_to_use*last_close[0])/user_capital
             used_quantities[stock] = x
         elif 0.9 <= x <= 1:
             x = 1
-            optimal_weights[stock] = (x*lot_to_use)/user_capital
+            optimal_weights[stock] = (x*lot_to_use*last_close[0])/user_capital
             used_quantities[stock] = x
         else:
             x = round(x)
-            optimal_weights[stock] = (x*lot_to_use)/user_capital
+            optimal_weights[stock] = (x*lot_to_use*last_close[0])/user_capital
             used_quantities[stock] = x
 
     print(optimal_weights)
@@ -278,7 +278,7 @@ def fine_folio_core(stocks_to_work, user_capital, start, end):
     optimal_weights_2 = pd.concat(frames, axis=1, ignore_index=False)
     optimal_weights_2['Percentage (%)'] = optimal_weights_2['Percentage (%)']*100
     optimal_weights_2['Lot'] = optimal_weights_2['Lot'].astype(int)
-    optimal_weights_2['How much lots to buy'] = optimal_weights_2['How much lots to buy'].astype(int)
+    optimal_weights_2['Lots to buy'] = optimal_weights_2['Lots to buy'].astype(int)
 
     print(optimal_weights_2)
 
@@ -347,8 +347,8 @@ def backtest(stocks_to_work, optimal_weights, user_capital, start_b, end_b):
 
     print(capital)
     print(backtest_df)
-    picture = backtest_df['Total'].plot(figsize=(10,8))
-    plt.show()
+    #picture = backtest_df['Total'].plot(figsize=(10,8))
+    #plt.show()
     capital = capital + int(backtest_df['Total'].iloc[-1])
     #print(capital)
     return capital
