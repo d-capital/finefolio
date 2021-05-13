@@ -38,7 +38,7 @@ pluggy==0.13.1
 proglog==0.1.9
 property-cached==1.6.3
 py==1.8.1
-pydantic==1.5.1
+pydantic==1.6.2
 Pygments==2.6.1
 pyparsing==2.4.6
 PySocks==1.7.1
