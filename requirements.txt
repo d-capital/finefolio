@@ -53,7 +53,7 @@ scipy==1.4.1
 six==1.14.0
 statsmodels==0.11.0
 tqdm==4.46.0
-urllib3==1.25.8
+urllib3==1.26.5
 virtualenv==20.0.18
 wcwidth==0.1.9
 Werkzeug==1.0.1
