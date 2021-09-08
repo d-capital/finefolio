@@ -33,7 +33,7 @@ packaging==20.4
 pandas==1.0.1
 pandas-datareader==0.8.1
 patsy==0.5.1
-Pillow==7.1.2
+Pillow==8.3.2
 pluggy==0.13.1
 proglog==0.1.9
 property-cached==1.6.3
